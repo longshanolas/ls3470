@@ -256,13 +256,7 @@ function query_sentences()
       else
           for cur = 1,line[1] do
               for i = 2,#line do
-                 if model ~= nil and model.start_s ~= nil then
-                   for d = 1, 2 * params.layers do
-                     model.start_s[d]:zero()
-                   end
-                 end
                  g_disable_dropout(model.rnns)
-                 g_replace_table(model.s[0], model.start_s)
                  local x=line[i]
                  if ptb.vocab_map[x]==nil then x="<unk>" end
                  local xidx=transfer_data(torch.Tensor(params.batch_size):fill(ptb.vocab_map[x]))

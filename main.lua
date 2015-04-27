@@ -10,7 +10,7 @@ cmd = torch.CmdLine()
 cmd:text()
 -- global:
 cmd:option('-notrain', 1, 'load model instead of training one')
-cmd:option('-modelname', 'model_pred50_200.net', 'name of model')
+cmd:option('-modelname', 'model_pred.net', 'name of model')
 cmd:text()
 opt = cmd:parse(arg or {})
 
@@ -257,13 +257,7 @@ function query_sentences()
           break -- end loop
         end
 
-        if model ~= nil and model.start_s ~= nil then
-            for d = 1, #model.start_s do
-             model.start_s[d]:zero()
-            end
-        end
         g_disable_dropout(model.rnns)
-        g_replace_table(model.s[0], model.start_s)
         local x=line[1]
         if ptb.vocab_map[x]==nil then x="<eos>" end
         local xsize=model.pred[1]:size(1)
